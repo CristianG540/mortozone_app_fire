@@ -24,6 +24,7 @@ export class ConfigProvider {
   static readonly CDB_USER: string = 'admin';
   static readonly CDB_PASS: string = 'admin';
   static readonly SEARCH_CLIENTS_URL: string = `https://www.gatortyres.com:1339/clientes/motorzone/search`;
+  static readonly SEARCH_PRODS_URL: string = `https://www.gatortyres.com:1339/prods/motorzone/search`;
   static readonly JOSEFA_URL: string = 'https://gatortyres.com';
   static readonly G_MAPS_KEY: string = 'AIzaSyAtVh-4gg1RRcS_jUlDtatc6SjwP-5XI70';
 

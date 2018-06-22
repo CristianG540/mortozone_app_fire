@@ -78,7 +78,7 @@ export class OrdenProvider {
     }
 
     const token = await this.storage.get('josefa-token');
-    const url: string = cg.JOSEFA_URL + '/sap/order';
+    const url: string = cg.JOSEFA_URL + '/sap/order_motorzone';
 
     const ordenesCalls: Observable<any>[] = _.map(this.ordenesPendientes, (orden: Orden) => {
 
@@ -130,7 +130,7 @@ export class OrdenProvider {
             responseApi : err,
           });
         }),
-        timeout(7000),
+        // timeout(7000),
       );
 
     });
@@ -177,7 +177,7 @@ export class OrdenProvider {
             return res.responseApi.code >= 400;
           });
           if (failOrders.length > 0) {
-            console.error(failOrders.length + ' ordenes no se han podido subir a sap, verifique su conexion a internet y vuelva a intentarlo');
+            console.error(failOrders.length + ' ordenes no se han podido subir a sap, verifique su conexion a internet y vuelva a intentarlo', failOrders);
           } else {
             this.util.showToast('Las ordenes se subieron correctamente a sap.');
           }

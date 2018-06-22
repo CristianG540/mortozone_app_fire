@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { map, timeout } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
@@ -30,6 +32,7 @@ export class ProductosProvider {
   constructor(
     private angularFireDB: AngularFireDatabase,
     private evts: Events,
+    private http: HttpClient,
   ) {
   }
 
@@ -125,6 +128,44 @@ export class ProductosProvider {
 
     // ejecuto todas las promesas del array y devuelvo los valores que devuelven dichas promesas
     return await Promise.all(updatePromises);
+
+  }
+
+  /**
+   *
+   * este metodo es el encargado de hacer funcionar la busqueda de los productos
+   * mediante el ingreso del sku o la descripcion de producto
+   *
+   * @param {string} query
+   * @memberof ProductosProvider
+   */
+  public async searchAutocomplete(query: string): Promise<Producto[]> {
+    const url: string = cg.SEARCH_PRODS_URL;
+    const params = new HttpParams()
+      .set('keyword', query);
+    const options = {
+      headers: new HttpHeaders({
+        'Accept'       : 'application/json',
+        'Content-Type' : 'application/json',
+      }),
+      params: params,
+    };
+
+    try {
+
+      const res = await this.http.get<Producto[]>( url, options ).pipe(
+        timeout(10000),
+      ).toPromise();
+
+      return res;
+
+    } catch (err) {
+      console.error('Error searchAutocomplete - providers/productos.ts', err);
+      Raven.captureException( new Error(`Error searchAutocomplete - providers/productos.ts 🐛: ${JSON.stringify(err)}`), {
+        extra: err,
+      });
+      return [];
+    }
 
   }
 

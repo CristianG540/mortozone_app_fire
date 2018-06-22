@@ -37,15 +37,24 @@ export class BuscarPage {
   }
 
   private updateSearch(ev: any): void {
-    // const loading = this.util.showLoading();
+    const loading = this.util.showLoading();
     // set val to the value of the searchbar
     const val = ev.target.value ? ev.target.value : '';
     if (val === '') {
-      // loading.dismiss();
+      loading.dismiss();
       this.autocompleteItems = [];
       return;
     }
-    this.prodsServ.sku$.next(val.toUpperCase());
+    this.prodsServ.searchAutocomplete(val)
+      .then( (prods: Producto[]) => {
+        loading.dismiss();
+        this.autocompleteItems = prods;
+      }).catch( err => {
+        console.error('Error updateSearch - pages/buscar.ts', err);
+        Raven.captureException( new Error(`Error updateSearch - pages/buscar.ts 🐛: ${JSON.stringify(err)}`), {
+          extra: err,
+        });
+      })
   }
 
   private addProd(producto: Producto): void {
