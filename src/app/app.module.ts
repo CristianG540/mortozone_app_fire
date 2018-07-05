@@ -21,13 +21,6 @@ import { CarteraPage } from '../pages/cartera/cartera';
 
 // Providers
 import { ConfigProvider } from '../providers/config/config';
-// manejo de errores sentry
-import { SentryErrorHandler } from '../providers/error-handler/sentry-errorhandler';
-
-// Libs terceros
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
 import { SongProvider } from '../providers/song/song';
 import { AuthProvider } from '../providers/auth/auth';
 import { ProductosProvider } from '../providers/productos/productos';
@@ -36,6 +29,14 @@ import { ClientesProvider } from '../providers/clientes/clientes';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { OrdenProvider } from '../providers/orden/orden';
 import { CarteraProvider } from '../providers/cartera/cartera';
+
+// manejo de errores sentry
+import { SentryErrorHandler } from '../providers/error-handler/sentry-errorhandler';
+
+// Libs terceros
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 @NgModule({
   declarations: [
